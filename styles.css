@@ -887,3 +887,356 @@ footer {
 .footer-back:hover { text-decoration: underline; }
 
 .footer-bottom span:last-child { text-align: right; }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
+
+/* ── Mobile header ──────────────────────────────────────── */
+.mobile-header {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+/* ── Sidebar nav open (mobile) ──────────────────────────── */
+@media (max-width: 899px) {
+
+  /* Show mobile header */
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: var(--white);
+    border-bottom: 1px solid var(--sidebar-border);
+    padding: 0 20px;
+    z-index: 150;
+    box-sizing: border-box;
+  }
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .mobile-logo img {
+    height: 20px;
+    width: auto;
+    display: block;
+  }
+
+  /* Hamburger button */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: flex-end;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 1.5px;
+    background: var(--black);
+    border-radius: 1px;
+    transition: transform 0.2s, opacity 0.2s, width 0.2s;
+  }
+  .hamburger span:nth-child(1) { width: 20px; }
+  .hamburger span:nth-child(2) { width: 14px; }
+  .hamburger span:nth-child(3) { width: 20px; }
+
+  .hamburger.open span:nth-child(1) {
+    width: 20px;
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) {
+    width: 20px;
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Overlay backdrop */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 190;
+  }
+  .sidebar-overlay.open { display: block; }
+
+  /* Sidebar as slide-in drawer */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 200;
+    top: 0;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  /* Main content — no sidebar offset, push down for header */
+  .main {
+    margin-left: 0;
+    padding-top: 56px;
+  }
+
+  /* Footer — break out reset (no sidebar to offset) */
+  footer {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Prevent body scroll when nav is open */
+  body.nav-open { overflow: hidden; }
+}
+
+/* ── Layout: single-column below 768px ─────────────────── */
+@media (max-width: 768px) {
+
+  /* ── Tighter spacing tokens on mobile ── */
+  :root {
+    --gap:     16px;
+    --padding: 20px;
+  }
+
+  /* ── Global overflow safety ── */
+  .main { overflow-x: hidden; }
+
+  img { max-width: 100%; height: auto; }
+
+  /* ── Hero ── 1 */
+  .hero { height: 50vh; }
+
+  .hero-text {
+    left: var(--padding);
+    right: var(--padding);
+    bottom: var(--padding);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .hero-title,
+  .hero-version {
+    font-size: clamp(36px, 10vw, 60px);
+    line-height: 1;
+  }
+
+  /* ── 1: Section banner — side by side, left + right aligned ── */
+  .section-banner {
+    height: auto;
+    min-height: 200px;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-end;
+    padding-top: calc(var(--padding) * 1.5);
+    padding-bottom: calc(var(--padding) * 1.5);
+  }
+
+  .section-num  { text-align: left;  }
+  .section-title { text-align: right; }
+
+  /* ── Introduction text — smaller on mobile ── */
+  .home-intro p {
+    font-size: clamp(16px, 4.8vw, 20px);
+    line-height: 26px;
+  }
+
+  .section-intro p {
+    font-size: clamp(16px, 4.8vw, 20px);
+    line-height: 26px;
+  }
+
+  /* Section intro */
+  .section-intro {
+    padding: var(--padding);
+    padding-bottom: clamp(32px, 8vw, 56px);
+  }
+
+  /* Content rows — stack label above text */
+  .content-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .content-row--deep {
+    padding-bottom: 60px;
+  }
+
+  /* Horizontal displays — stack children */
+  .display-horizontal {
+    padding: var(--gap) var(--padding);
+  }
+
+  .display-horizontal > * {
+    width: 100% !important;
+  }
+
+  .brandmark-split {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .display-vertical {
+    padding: var(--gap) var(--padding);
+  }
+
+  /* Color grids */
+  .color-grid-3 { grid-template-columns: 1fr; }
+
+  /* Identity-on-color */
+  .identity-color-grid { grid-template-columns: 1fr; }
+
+  /* Combinations — 2×4 → 2×2 rows */
+  .combinations-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Don'ts grid — 3 col → 2 col */
+  .donts-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* App grid — stack */
+  .app-grid { grid-template-columns: 1fr; }
+
+  /* Remove fixed min-height that drives aspect-ratio to huge widths ── 8 */
+  .app-card.full-width {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .app-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Scaling — proportional widths still work, but bump min */
+  .scaling-display .scale-2 { width: 60%; }
+  .scaling-display .scale-3 { width: 44%; }
+  .scaling-display .scale-4 { width: 30%; }
+  .scaling-display .scale-5 { width: 18%; }
+  .scaling-display .scale-6 { width: 10%; }
+
+  /* Footer */
+  footer {
+    padding: var(--padding) var(--padding) calc(var(--padding) * 0.75);
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+    text-align: left;
+  }
+
+  .footer-col--center,
+  .footer-col--right {
+    text-align: left;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .footer-back { text-align: left; }
+  .footer-bottom span:last-child { text-align: left; }
+}
+
+  /* ── 2: Section banner — smaller text ── */
+  .section-num,
+  .section-title {
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.1;
+  }
+
+  /* ── 4: Lockup image ── */
+  #lockup .display-bg-light img {
+    max-width: 72%;
+  }
+
+  /* ── 2: Remove min-height from display panels ── */
+  .display-bg-light,
+  .display-bg-dark {
+    padding: 12px;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+
+  /* ── 3: Brandmark images max-width 20% ── */
+  .brandmark-split .display-bg-light img,
+  .brandmark-split .display-bg-dark img {
+    max-width: 20%;
+    max-height: none;
+  }
+
+  .exclusion-cell {
+    padding: 12px;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* ── 6: Hierarchy text samples — scale down ── */
+  #hierarchy .display-vertical .content-row:nth-child(1) .text p {
+    font-size: clamp(32px, 9vw, 40px);
+    line-height: 1.05;
+  }
+
+  #hierarchy .display-vertical .content-row:nth-child(2) .text p {
+    font-size: clamp(17px, 5vw, 22px);
+    line-height: 1.2;
+  }
+
+  #hierarchy .display-vertical .content-row:nth-child(3) .text p {
+    font-size: clamp(13px, 3.5vw, 16px);
+    line-height: 1.5;
+  }
+
+  /* ── 7: Photo composition — 2-column grid ── */
+  .img-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ── 4: Don'ts item image height ── */
+  .dont-item img {
+    height: 20px;
+  }
+
+  /* ── 5: Primary palette — single column ── */
+  .color-grid-2 { grid-template-columns: 1fr; }
+
+  /* ── 9: Footer text smaller ── */
+  footer,
+  .footer-top,
+  .footer-bottom,
+  .footer-back {
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+
+/* ── Extra small — very narrow phones ──────────────────── */
+@media (max-width: 480px) {
+
+  .donts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .combinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .color-grid-2 { grid-template-columns: 1fr; }
+}

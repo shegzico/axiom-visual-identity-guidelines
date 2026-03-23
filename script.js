@@ -30,6 +30,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── Mobile logo → back to top ──────────────────────────── */
+  const mobileLogoLink = document.getElementById('mobile-logo-link');
+  if (mobileLogoLink) {
+    mobileLogoLink.addEventListener('click', e => {
+      e.preventDefault();
+      scrollToId('home');
+    });
+  }
+
+  /* ── Hamburger menu ─────────────────────────────────────── */
+  const hamburger = document.getElementById('hamburger');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.classList.add('nav-open');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
+
+  // Close sidebar when a sub-nav link is clicked on mobile
+  document.querySelectorAll('.nav-sub-item').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 900) closeSidebar();
+    });
+  });
+
   /* ── Sidebar accordion + scroll to section banner ────────── */
   document.querySelectorAll('.nav-item[data-target]').forEach(btn => {
     btn.addEventListener('click', () => {
